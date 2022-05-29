@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="This page lists the Students and Courses data">
+    <title>Course Data</title>
+</head>
+<body>
+<h1>Course Details</h1>
+    <table border="2" id="course-details-table">
+        <thead>
+            <title>Course Details</title>
+            <tr>
+                <th>Average Marks</th>
+                <th>Maximum Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ average_marks }}</td>
+                    <td>{{ maximum_marks }}</td>
+                </tr>
+        </tbody>
+    </table>
+	
+    <br>	
+    <img src= "static/histogram.png">
+    
+    <br><br>
+    <a href="/"> Go Back </a>
+</body>
+</html>
