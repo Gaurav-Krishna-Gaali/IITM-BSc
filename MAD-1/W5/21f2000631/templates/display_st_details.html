@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <h2 style="text-align:center">Students Details</h2>
+    <table id="personal-details">
+        <tr>
+            <th>Roll Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        <tr>
+            <td>{{student_details["roll_number"]}}</td>
+            <td>{{student_details["first_name"]}}</td>
+            <td>{{student_details["last_name"]}}</td>
+        </tr>
+    </table>
+
+    <h2 style="text-align:center">Enrollment list</h2>
+
+    {% if student_details.courses|length > 0 %}
+    <table id="enroll-table">
+        <tr>
+            <th>S. No.</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Course Description</th>
+        </tr>
+
+        {% for course in student_details.courses %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ course["course_code"] }}</td>
+            <td>{{ course["course_name"] }}</td>
+            <td>{{ course["course_description"] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    No courses registered.<br>
+
+    {% endif %}
+
+    <a href="/" type="button">Go Back</a>
+
+</body>
+
+</html>
