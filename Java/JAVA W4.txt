@@ -1,0 +1,218 @@
+JAVA WEEK-4
+
+PPA 1-----------------------------------------------
+
+//implement equals() for Char
+        Char ch = (Char) d;
+        if (c == ch.c ){
+            return true;
+        }else {
+            return false;
+        }
+    }
+}
+class CharArray implements Searchable{
+    private Char[] carr;
+    public CharArray(Char[] carr_){
+        carr = carr_;
+    }
+    public int search(int start_index, Object key) {
+        //search the key in array carr from the index start_index
+        //if the key found, return index of the first occurrence of the key
+        //else return -1
+        for (int e = start_index; e < carr.length; e++){
+            if (carr[e].equals(key)){
+                return e;
+            }
+        }
+        return -1;
+    }
+}
+
+class FrequencyCounter{
+    public static int getFrequency(Searchable ob, Object key){
+        int i = 0;
+        if (ob instanceof CharArray) {
+            //count occurrences of the key in ob using search function
+            int count = 0 , j = 0;
+            j = ob.search(i, key);
+            while (j > -1){
+                if ( j != -1){
+                    count += 1;
+                }
+                j = ob.search(j+1 ,key);
+            }
+            return count;
+        }
+        else
+            return 0;
+    }
+
+
+PPA 2-----------------------------------------------
+
+    static Voter new_voter;
+    static int total_no_of_voters;
+    static int current_voter_count;
+    
+    private Voter() {  
+        // System.out.println("1 Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  " voterno " + Voter.current_voter_count);
+		        current_voter_count++;					
+    }
+
+    public static Voter getVoter() {
+        //implement singleton behaviour
+        // System.out.println("2 Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count + new_voter);
+        if(new_voter == null){
+            new_voter = new Voter();
+            return new_voter;
+        }return null;
+    }
+
+    public void firstVoter(){
+        // System.out.println("3 Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count );
+		        if(new_voter != null) {
+			            EVM new_machine = EVM.getEVM(new_voter);
+			            new_machine.startVoting();
+		        }
+    }
+
+    public void callNewVoter() {
+        // Write code to setup a new EVM object for the new voter
+        // System.out.println("4 Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count);
+        if(Voter.current_voter_count < Voter.total_no_of_voters){
+            Voter v = Voter.getVoter();
+            EVM evm = EVM.getEVM(v);
+        
+        
+        //Ignore the following 6 lines of code
+        //but do not delete this code in your submission 
+//======================================================================== 
+        try {
+		            EVM x = EVM.getEVM(null);
+			            x.startVoting();
+		        }catch(NullPointerException e) {
+			            System.out.println("EVM is Singleton");
+	        }
+//========================================================================  	
+	        // Resume writing your code here
+	   evm.startVoting();
+	    }    // Hint: Write code to start voting for the new user on the new EVM
+    }
+}
+
+class EVM{
+
+    // Define appropriate variables for implementing singleton behaviour
+    // in accordance with the given coded parts and sample output
+        static Voter current_voter;
+        static EVM new_evm;
+        static int evm_count;
+
+        private EVM(Voter v) {
+        //     System.out.println("a Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count);
+            current_voter = v;
+		            evm_count++;
+        }
+        public static EVM getEVM(Voter v) {
+            // Implement singleton behaviour
+        //     System.out.println("b Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count);
+           if (new_evm == null){
+               new_evm = new EVM(v);
+               return new_evm;
+           }
+           return null;
+        }
+
+        public void startVoting() {
+            // Complete voting for the current voter and call the next voter
+            // Hint : Use callback here
+        //     System.out.println("c Inside firstvoter " + "EVm no " + EVM.evm_count +
+        //  "voterno " + Voter.current_voter_count);
+            System.out.println("voting under process on EVM number "+EVM.evm_count);
+            System.out.println("Voting completed for voter "+Voter.current_voter_count);
+            
+            Voter.new_voter = null;
+            EVM.new_evm = null;
+            
+            EVM.current_voter.callNewVoter();
+        }
+}
+
+
+GrPA 1-------------------------------------------------------------------------------
+
+//Fill the code here
+abstract class  StringReverse extends StringOperations{
+    public String reverse(String s){
+        String S = "";
+        
+        for (int i = 0; i < s.length(); i++){
+            S = s.charAt(i) + S;
+        }
+        return (S);
+    }
+}
+
+class UpdatedStrings extends StringReverse{
+    public int vowelCount(String s){
+        int count = 0;
+        for (int j = 0; j < s.length(); j++){
+    
+            if (s.charAt(j) == 'a' || s.charAt(j) == 'e' || s.charAt(j) == 'i' || s.charAt(j) == 'o' || s.charAt(j) == 'u'){
+                count += 1;
+            }
+        }
+        return count;
+    }
+}
+
+GrPA 1-------------------------------------------------------------------------------
+
+int iter=0;
+//implement the parameterized constructor to initialize size
+    int p=0;
+    public Sequence(int s){
+        size=s;
+        this.iArr=new int[s];
+    }
+//implement addTo(elem) to add an int elem to the sequence 
+    public void addTo(int n){
+        this.iArr[this.p]=n;
+        this.p++;
+    }
+//implement get_Iterator() to return Iterator object
+    public Iterator get_Iterator(){
+        return new SeqIterator();
+    }
+ 
+    private class SeqIterator implements Iterator{
+        int indx;
+        public SeqIterator(){
+            indx = -1;
+        }
+        //implement has_next()
+        @Override
+        public boolean has_next() {
+            if (iter<size){
+                return true;
+        }else{
+            return false;}
+        }
+        //implement get_next()
+        @Override
+        public Object get_next() {
+            int r_val=iArr[iter];
+            iter++;
+            return r_val;
+        }
+    }
+}
+
+================================================================================================
